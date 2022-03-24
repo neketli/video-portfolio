@@ -4,42 +4,37 @@ const setVideoUrl = (source) => {
 };
 
 // contacts-slider
-/* Индекс слайда по умолчанию */
-var slideIndex = 1;
-showSlides(slideIndex);
-
-/* Функция увеличивает индекс на 1, показывает следующй слайд*/
-function plusSlide() {
-  showSlides((slideIndex += 1));
-}
-
-/* Функция уменьшяет индекс на 1, показывает предыдущий слайд*/
-function minusSlide() {
-  showSlides((slideIndex -= 1));
-}
-
-/* Устанавливает текущий слайд */
-function currentSlide(n) {
-  showSlides((slideIndex = n));
-}
-
-/* Основная функция сладера */
 const showSlides = (n) => {
-  var i;
-  var slides = document.getElementsByClassName("slider__item");
-  var dots = document.getElementsByClassName("slider__nav-item");
-  if (n > slides.length) {
-    slideIndex = 1;
+  let slideItems = document.getElementsByClassName("slider__item");
+  let navItems = document.getElementsByClassName("slider__nav-item");
+  if (n === slideItems.length) {
+    slideIndex = 0;
   }
-  if (n < 1) {
-    slideIndex = slides.length;
+  if (n < 0) {
+    slideIndex = slideItems.length-1;
   }
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
+  for (let i = 0; i < slideItems.length; i++) {
+    slideItems[i].style.display = "none";
   }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
+  for (let i = 0; i < navItems.length; i++) {
+    navItems[i].className = navItems[i].className.replace(
+      " slider__nav-item-active",
+      ""
+    );
   }
-  slides[slideIndex - 1].style.display = "block";
-  dots[slideIndex - 1].className += " active";
+  slideItems[slideIndex].style.display = "flex";
+  navItems[slideIndex].className += " slider__nav-item-active";
 };
+
+const nextSlide = () => {
+  showSlides((slideIndex += 1));
+};
+const prevSlide = () => {
+  showSlides((slideIndex -= 1));
+};
+const setSlide = (n) => {
+  showSlides((slideIndex = n));
+};
+
+var slideIndex = 0;
+showSlides(slideIndex);
