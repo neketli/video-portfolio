@@ -13,7 +13,7 @@ const pageSlider = new Swiper(".page", {
   observeSlideChildren: true,
   watchOverflow: true,
 
-  // усправление
+  // управление
   keyboard: {
     enabled: true,
     onlyInViewport: true,
@@ -42,6 +42,9 @@ const pageSlider = new Swiper(".page", {
 
   on: {
     init: () => {
+      document
+        .querySelector(".page__pagination-load")
+        .classList.remove("page__pagination-load");
       toggleScrollType();
     },
     resize: () => {
@@ -107,3 +110,68 @@ const setSlide = (n) => {
 
 var slideIndex = 0;
 showSlides(slideIndex);
+
+// animations
+(function () {
+  var animItems = document.querySelectorAll("._anim");
+  if (animItems.length > 0) {
+    for (let i = 0; i < animItems.length; i++) {
+      animItems[i].classList.remove("_anim-observed");
+    }
+  }
+
+  var observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (
+        typeof getCurrentAnimationPreference === "function" &&
+        !getCurrentAnimationPreference()
+      ) {
+        return;
+      }
+
+      if (entry.isIntersecting) {
+        entry.target.classList.add("_anim-observed");
+        return;
+      }
+
+      entry.target.classList.remove("_anim-observed");
+    });
+  });
+  if (animItems.length > 0) {
+    for (let i = 0; i < animItems.length; i++) {
+      observer.observe(animItems[i]);
+    }
+  }
+})();
+
+(function () {
+  var animItems = document.querySelectorAll("._anim-text");
+  if (animItems.length > 0) {
+    for (let i = 0; i < animItems.length; i++) {
+      animItems[i].classList.remove("_anim-observed");
+    }
+  }
+
+  var observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (
+        typeof getCurrentAnimationPreference === "function" &&
+        !getCurrentAnimationPreference()
+      ) {
+        return;
+      }
+
+      if (entry.isIntersecting) {
+        entry.target.classList.add("_anim-observed");
+        return;
+      }
+
+      entry.target.classList.remove("_anim-observed");
+    });
+  });
+  if (animItems.length > 0) {
+    for (let i = 0; i < animItems.length; i++) {
+      observer.observe(animItems[i]);
+    }
+  }
+})();

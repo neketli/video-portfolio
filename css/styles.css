@@ -81,6 +81,15 @@ h2 {
       -ms-flex-direction: column;
           flex-direction: column;
   z-index: 10;
+  opacity: 1;
+  -webkit-transition: all 0.5s ease-in-out 0.2s;
+  transition: all 0.5s ease-in-out 0.2s;
+}
+
+.page__pagination-load {
+  -webkit-transform: translate(-100%, -50%);
+          transform: translate(-100%, -50%);
+  opacity: 0;
 }
 
 .page__bullet {
@@ -328,6 +337,7 @@ h2 {
   line-height: 120%;
   color: #000000;
   text-align: center;
+  margin-top: 0;
 }
 
 .examples {
@@ -517,4 +527,22 @@ h2 {
   to {
     opacity: 1;
   }
+}
+
+._anim {
+  opacity: 0;
+  -webkit-transition: all 1s ease-in 0.2s;
+  transition: all 1s ease-in 0.2s;
+}
+
+._anim-text {
+  opacity: 0;
+  -webkit-transition: all 1s ease-in 0.2s;
+  transition: all 1s ease-in 0.2s;
+}
+
+._anim-observed {
+  opacity: 1;
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
 }

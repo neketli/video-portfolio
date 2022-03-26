@@ -89,6 +89,13 @@ h2 {
     display: flex;
     flex-direction: column;
     z-index: 10;
+    opacity: 1;
+    transition: all 0.5s ease-in-out 0.2s;
+
+    &-load {
+      transform: translate(-100%, -50%);
+      opacity: 0;
+    }
   }
 
   &__bullet {
@@ -272,6 +279,7 @@ h2 {
   &__text {
     @include font-default(16px);
     text-align: center;
+    margin-top: 0;
   }
 }
 
@@ -343,6 +351,7 @@ h2 {
     height: 60vh;
   }
 }
+
 .slider {
   position: relative;
   background-color: #ffffff;
@@ -421,4 +430,21 @@ h2 {
   to {
     opacity: 1;
   }
+}
+
+._anim {
+  opacity: 0;
+  transition: all 1s ease-in 0.2s;
+
+  &-text {
+  	opacity: 0;
+	transition: all 1s ease-in 0.2s;
+  }
+
+  &-observed {
+    opacity: 1;
+	transform: translate(0, 0);
+  }
+
+
 }
