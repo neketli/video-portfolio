@@ -1,4 +1,6 @@
 //page-scroll
+const pagePagination = document.querySelector(".page__pagination");
+
 const pageSlider = new Swiper(".page", {
   // Переназначаю дефолт классы
   wrapperClass: "page__wrapper",
@@ -42,9 +44,10 @@ const pageSlider = new Swiper(".page", {
 
   on: {
     init: () => {
+      pagePagination.classList.remove("page__pagination-load");
       document
-        .querySelector(".page__pagination-load")
-        .classList.remove("page__pagination-load");
+        .querySelector(".page__wrapper")
+        .classList.add("page__wrapper-loaded");
       toggleScrollType();
     },
     resize: () => {
@@ -53,20 +56,26 @@ const pageSlider = new Swiper(".page", {
   },
 });
 
-const toggleScrollType = () => {
-  pageSlider.params.freeMode = false;
+function toggleScrollType() {
+  if (pagePagination.classList.contains("page__pagination-load")) {
+    pagePagination.classList.remove("page__pagination-load");
+    pageSlider.params.freeMode = false;
+  }
 
   for (let index = 0; index < pageSlider.slides.length; index++) {
     const page = pageSlider.slides[index];
     const pageContent = page.querySelector(".screen__content");
     if (pageContent) {
       if (pageContent.offsetHeight > window.innerHeight) {
-        pageSlider.params.freeMode = true;
+        // pagePagination.classList.add("page__pagination-load");
+        pageSlider.params.freeMode = {
+          enabled: true,
+        };
         break;
       }
     }
   }
-};
+}
 
 pageSlider.init();
 

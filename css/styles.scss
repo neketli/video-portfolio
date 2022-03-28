@@ -2,24 +2,35 @@
 
 $black: #000000;
 $yellow: #feda4b;
+$maxWidth: 1440;
 
-@mixin font-default($font-size) {
+@mixin font-default($font-size, $min-font-size) {
   font-family: "Jost";
   font-style: normal;
   font-weight: 400;
-  font-size: $font-size;
-  line-height: 120%;
   color: #000000;
+
+  $addSize: $font-size - $min-font-size;
+  $maxWidth: $maxWidth - 320;
+  font-size: calc(
+    #{$min-font-size + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth})
+  );
+  line-height: 120%;
 }
 
-@mixin font-header($font-size) {
+@mixin font-header($font-size, $min-font-size) {
   font-family: "Comfortaa";
   font-style: normal;
   font-weight: 400;
-  font-size: $font-size;
-  line-height: 120%;
   text-align: center;
   color: #000000;
+
+  $addSize: $font-size - $min-font-size;
+  $maxWidth: $maxWidth - 320;
+  font-size: calc(
+    #{$min-font-size + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth})
+  );
+  line-height: 120%;
 }
 
 h2 {
@@ -33,7 +44,7 @@ h2 {
   position: relative;
   background-color: transparent;
 
-  @include font-default(24px);
+  @include font-default(24, 16);
   text-align: center;
   font-weight: 700;
   text-decoration: none;
@@ -79,6 +90,12 @@ h2 {
     flex-direction: column;
     width: 100%;
     height: 100%;
+	opacity: 0;
+	transition: all 0.4s ease-in;
+	
+	&-loaded {
+		opacity: 1;
+	}
   }
 
   &__pagination {
@@ -100,8 +117,8 @@ h2 {
 
   &__bullet {
     margin: 10px 0px;
-    width: 20px;
-    height: 20px;
+    width: 1.7vw;
+    height: 1.7vw;
     border-radius: 50%;
     cursor: pointer;
     background-color: $black;
@@ -147,26 +164,30 @@ h2 {
   flex: 1 0 100%;
   position: relative;
   &__content {
-    height: 100%;
+    height: 90%;
     padding: 25px;
     position: relative;
     z-index: 5;
   }
 
   &__title {
-    @include font-header(64px);
+    @include font-header(64, 32);
   }
 
   &__tite-intro {
-    @include font-header(72px);
+    @include font-header(72, 36);
     align-self: center;
   }
 
   &__tite-main {
-    @include font-default(64px);
+    @include font-default(64, 24);
     & span {
       background-color: $yellow;
     }
+  }
+
+  &__image img {
+	  width: 40vw;
   }
 
   &__body {
@@ -196,7 +217,7 @@ h2 {
   }
 
   &__text {
-    @include font-default(48px);
+    @include font-default(48, 20);
 
     &-right {
       text-align: right;
@@ -221,7 +242,7 @@ h2 {
   justify-content: space-around;
   width: 100%;
   height: 100%;
-
+  margin-left: 32px;
   &__text {
     display: flex;
     flex-direction: column;
@@ -270,14 +291,14 @@ h2 {
   }
 
   &__header {
-    @include font-default(24px);
+    @include font-default(24, 16);
     font-weight: 700;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     text-align: center;
   }
 
   &__text {
-    @include font-default(16px);
+    @include font-default(16, 14);
     text-align: center;
     margin-top: 0;
   }
@@ -375,6 +396,10 @@ h2 {
       margin: 0 30px;
     }
 
+	& img {
+		max-width: 100%;
+	}
+
     &-prev,
     &-next {
       cursor: pointer;
@@ -437,14 +462,64 @@ h2 {
   transition: all 1s ease-in 0.2s;
 
   &-text {
-  	opacity: 0;
-	transition: all 1s ease-in 0.2s;
+    opacity: 0;
+    transition: all 1s ease-in 0.2s;
   }
 
   &-observed {
     opacity: 1;
-	transform: translate(0, 0);
+    transform: translate(0, 0);
   }
+}
+
+
+@media (max-width: 769px) {
+	.cards {
+		padding: 0;
+		&__wrapper {
+			flex-direction: column;
+			align-items: center;
+		}
+
+		&__item {
+			width: 70%;
+			height: 20%;
+			margin-right: 0;
+			margin-top: 30px;
+		}
+	}
+}
+
+@media (max-width: 450px) {
+	.intro {
+		flex-direction: column;
+		margin-left: 0;
+		img {
+			width: 60vw;
+		}
+	}
+
+	.video-slider {
+		&__nav {
+			& img {
+			width: 15vw;
+		}
+	}
+
+		& video#video-slider {
+    width: 70vw;
+   }
+	}
+
+	.slider{
+		&__item {
+			flex-direction: column;
+		}
+
+		& img {
+			display: none;
+		}
+	}
 
 
 }
